@@ -1,0 +1,193 @@
+   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">	  
+   <script langauage="javascript">
+      function showMessage(value){
+         document.getElementById("message").innerHTML = value;
+      }	  
+   </script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+   <script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) 
+{
+     //$scope.show="false"; 	                     
+     //$scope.ChangeOP = function() {
+		 
+		// if($scope.op=="Head")
+		 //{
+			//  alert();
+			  //$scope.show="true";
+			  
+		 //}
+        
+   // }
+	 //=$scope.myVar;
+	//if($scope.op.equals("Head"))
+	
+     $http.get("GetGrpProcess")
+    .then(function (response) {
+		$scope.myData = response.data;
+		//alert(myData);
+	 //$scope.names = response;
+	});
+});
+</script>
+<style>
+.button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  margin: .3em 0 1em 0;
+  width: 100%;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #3160B6;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.button:focus { outline: 0; }
+
+
+/* Button modifiers */
+
+.buttonBlue {
+  background: #4a89dc;
+  text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+}
+
+.buttonBlue:hover { background: #357bd8; }
+
+
+/* Ripples container */
+
+.ripples {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+
+/* Ripples circle */
+
+.ripplesCircle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.ripples.is-active .ripplesCircle {
+  animation: ripples .4s ease-in;
+}
+
+
+/* Ripples animation */
+
+@keyframes ripples {
+  0% { opacity: 0; }
+
+  25% { opacity: 1; }
+
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}
+.mdl-layout {
+	align-items: center;
+  justify-content: center;
+}
+.mdl-layout__content {
+	padding: 50px;
+	flex: none;
+}
+</style>
+
+<div class="mdl-layout mdl-js-layout mdl-color--grey-100" >
+<br><br><br><br><br><br><br><br><br><br><br><br>
+	<main class="mdl-layout__content">
+		<div class="mdl-card mdl-shadow--6dp">
+			<div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+				
+				<h2 class="mdl-card__title-text">Signup</h2>
+			</div>
+	  	<div class="mdl-card__supporting-text" ng-app="myApp" ng-controller="myCtrl">
+				<form action="RegProcess" >
+                     <div class="mdl-textfield mdl-js-textfield">
+						<input type="radio" class="mdl-select__input" name="Utype" id="Utype" value="Head" ng-model="op" />  <span> Create a Group </span>
+                        <br />
+                        <input type="radio" class="mdl-select__input" name="Utype" id="Utype" value="Member"  ng-model="op" /> <span>Join a Group</span>
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" id="UFname" name="UFname" ng-model="name"  />
+						<label class="mdl-textfield__label" for="username">Firstname</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" id="ULname" name="ULname"  />
+						<label class="mdl-textfield__label" for="username">Lastname</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="email" id="Umail" name="Umail" />
+						<label class="mdl-textfield__label" for="userpass">email</label>
+					</div>
+					  <div class="mdl-select mdl-js-select mdl-select--floating-label" ng-show="op == 'Member'" >
+        <select class="mdl-select__input" id="UGroup" name="UGroup"  >
+          <option value="no" selected="selected"> Group </option>
+          <option ng-repeat="x in myData"> {{x}}  </option> 
+        </select>
+		
+        <label class="mdl-select__label" for="UGroup"><b style="font-size:120%">Group name</b></label>
+      </div>   
+      <div class="mdl-select mdl-js-select mdl-select--floating-label" ng-show="op == 'Head'">
+        <input type="text" name="UGname" id="UGname"  /> 
+		
+        <label class="mdl-select__label" for="UGame"><b style="font-size:120%">Group name</b></label>
+      </div>   
+      
+                    
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="password" id="Upass" name="Upass" />
+						<label class="mdl-textfield__label" for="username">Password</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="password" id="Cpass" name="Cpass" />
+						<label class="mdl-textfield__label" for="username">Confirm Password</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield">DOB:
+						<input class="mdl-textfield__input" type="date" placeholder="DOB" id="Udob" name="Udob"  />
+						<label class="mdl-textfield__label" for="username"></label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="number" id="Uno" name="Uno" />
+						<label class="mdl-textfield__label" for="username">Contact Number</label>
+					</div>
+					<input type="reset" value="reset" class="button buttonBlue">
+                    <input type="submit" class="button buttonBlue" value="Signup">
+				</form>
+                
+                
+			</div>
+				
+				
+		</div>
+	</main>
+</div>
